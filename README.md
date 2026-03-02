@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚡ DeFi Signal — Bitcoin L1 Intelligence Terminal
 
-## Getting Started
+> Real-time DeFi dashboard for Bitcoin Layer 1, powered by OP_NET smart contracts.
 
-First, run the development server:
+Built for the **OP_NET Vibecoding Challenge** — Week 2: "The DeFi Signal"
+
+## What It Does
+
+DeFi Signal is a Bloomberg Terminal-style dashboard that gives you real-time intelligence on the OP_NET DeFi ecosystem on Bitcoin Layer 1.
+
+### Features
+
+- **Signal Score** — Proprietary composite index (0–100) measuring ecosystem health across 4 dimensions:
+  - **TVL** (0–35 pts): Fraction of MOTO supply staked on-chain
+  - **Activity** (0–25 pts): EMA gas usage from live RPC
+  - **Efficiency** (0–20 pts): Inverse of base gas price (lower fees = stronger signal)
+  - **Maturity** (0–20 pts): Protocol age since OP_NET launch
+- **Live Ecosystem Stats** — Block height, gas parameters, BTC fee rates — updated every 15 seconds
+- **Yield Opportunities Table** — OPSTAKE and NATIVE SWAP with live APY estimates and per-protocol Signal Score
+- **Portfolio Panel** — Connect OP_WALLET to see your MOTO balance and BTC holdings in real-time
+
+### Stack
+
+- **Next.js** (App Router) + TypeScript
+- **Tailwind CSS** — Bloomberg Terminal dark theme
+- **opnet** — Read-only contract interactions via `JSONRpcProvider`
+- **@btc-vision/walletconnect** — OP_WALLET integration
+- **@btc-vision/bitcoin** — Network configuration
+
+### OP_NET Contracts (Mainnet)
+
+| Contract | Address |
+|----------|---------|
+| MOTO Token | `0x75bd98b086b71010448ec5722b6020ce1e0f2c09f5d680c84059db1295948cf8` |
+| OPSTAKE | `0xaccca433aec3878ebc041cde2a1a2656f928cc404377ebd8339f0bf2cdd66cbe` |
+| NATIVE SWAP | `0x035884f9ac2b6ae75d7778553e7d447899e9a82e247d7ced48f22aa102681e70` |
+
+## Running Locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deploy
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+Deploy to Vercel with one click — `vercel.json` is pre-configured.
 
-To learn more about Next.js, take a look at the following resources:
+## Architecture
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+services/
+  provider.ts      — JSONRpcProvider singleton (never instantiated twice)
+  contracts.ts     — Contract instance cache (string-keyed Map)
+utils/
+  signalScore.ts   — Signal Score algorithm
+hooks/
+  useEcosystem.ts  — Live ecosystem data, refreshes every 15s
+  usePortfolio.ts  — User token balances
+components/
+  Header.tsx       — Logo + wallet connect + live clock
+  SignalMeter.tsx  — SVG gauge + component breakdown bars
+  EcosystemStats.tsx — Stats ticker
+  YieldTable.tsx   — Protocol table with live APY and Signal Score
+  Portfolio.tsx    — User holdings panel
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Built With Bob
 
-## Deploy on Vercel
+This app was built using **Bob**, the OP_NET AI development agent at [ai.opnet.org](https://ai.opnet.org).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**#opnetvibecode** | [@opnetbtc](https://x.com/opnetbtc) | [@opnetbtc_eco](https://x.com/opnetbtc_eco)

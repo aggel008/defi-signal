@@ -1,0 +1,48 @@
+import { networks } from '@btc-vision/bitcoin';
+
+export const NETWORK = networks.bitcoin;
+export const MAINNET_RPC = 'https://mainnet.opnet.org';
+
+export const CONTRACTS = {
+  MOTO: '0x75bd98b086b71010448ec5722b6020ce1e0f2c09f5d680c84059db1295948cf8',
+  STAKING: '0xaccca433aec3878ebc041cde2a1a2656f928cc404377ebd8339f0bf2cdd66cbe',
+  NATIVE_SWAP: '0x035884f9ac2b6ae75d7778553e7d447899e9a82e247d7ced48f22aa102681e70',
+} as const;
+
+export type ProtocolStatus = 'live' | 'beta' | 'soon';
+
+export interface Protocol {
+  id: string;
+  name: string;
+  type: 'Staking' | 'DEX' | 'Yield';
+  address: string;
+  tvlLabel: string;
+  status: ProtocolStatus;
+  maturityMonths: number;
+  description: string;
+}
+
+export const PROTOCOLS: Protocol[] = [
+  {
+    id: 'opstake',
+    name: 'OPSTAKE',
+    type: 'Staking',
+    address: CONTRACTS.STAKING,
+    tvlLabel: 'MOTO Staked',
+    status: 'live',
+    maturityMonths: 14,
+    description: 'Auto-compound MOTO staking on Bitcoin L1',
+  },
+  {
+    id: 'nativeswap',
+    name: 'NATIVE SWAP',
+    type: 'DEX',
+    address: CONTRACTS.NATIVE_SWAP,
+    tvlLabel: 'BTC/MOTO LP',
+    status: 'live',
+    maturityMonths: 12,
+    description: 'Native BTC ↔ MOTO decentralized exchange',
+  },
+];
+
+export const OPNET_LAUNCH_DATE = new Date('2024-11-01');
