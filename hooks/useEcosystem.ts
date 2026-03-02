@@ -41,15 +41,22 @@ export function useEcosystem() {
       const moto = getTokenContract(CONTRACTS.MOTO);
       const stakingAddr = Address.fromString(CONTRACTS.STAKING);
 
-      const [blockNumber, gasParams, metaResult, stakingBalResult] = await Promise.all([
+      const [blockNumber, gasParams, metaResult] = await Promise.all([
         provider.getBlockNumber(),
         provider.gasParameters(),
         moto.metadata(),
-        moto.balanceOf(stakingAddr),
       ]);
 
       const { totalSupply, decimals } = metaResult.properties;
-      const stakingBalance = stakingBalResult.properties.balance;
+
+      // Staking balance is optional — wrong address shouldn't break everything
+      let stakingBalance = 0n;
+      try {
+        const stakingBalResult = await moto.balanceOf(stakingAddr);
+        stakingBalance = stakingBalResult.properties.balance;
+      } catch {
+        // staking contract not found on testnet yet — use 0
+      }
 
       const stakingRatio =
         totalSupply > 0n ? Number((stakingBalance * 10_000n) / totalSupply) / 10_000 : 0;

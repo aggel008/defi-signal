@@ -26,9 +26,9 @@ export function Header() {
           </span>
           <span
             className="text-xs font-mono px-2 py-0.5 rounded"
-            style={{ background: '#161b22', color: '#22c55e', border: '1px solid #22c55e40' }}
+            style={{ background: '#161b22', color: '#F7931A', border: '1px solid #F7931A40' }}
           >
-            ● MAINNET
+            ● TESTNET
           </span>
         </div>
 

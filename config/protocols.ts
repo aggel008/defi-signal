@@ -1,10 +1,10 @@
 import { networks } from '@btc-vision/bitcoin';
 
-export const NETWORK = networks.bitcoin;
-export const MAINNET_RPC = 'https://mainnet.opnet.org';
+export const NETWORK = networks.opnetTestnet;
+export const MAINNET_RPC = 'https://testnet.opnet.org';
 
 export const CONTRACTS = {
-  MOTO: '0x75bd98b086b71010448ec5722b6020ce1e0f2c09f5d680c84059db1295948cf8',
+  MOTO: '0xfd4473840751d58d9f8b73bdd57d6c5260453d5518bd7cd02d0a4cf3df9bf4dd',
   STAKING: '0xaccca433aec3878ebc041cde2a1a2656f928cc404377ebd8339f0bf2cdd66cbe',
   NATIVE_SWAP: '0x035884f9ac2b6ae75d7778553e7d447899e9a82e247d7ced48f22aa102681e70',
 } as const;
